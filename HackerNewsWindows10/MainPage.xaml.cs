@@ -40,10 +40,7 @@ namespace HackerNewsWindows10
             resp.Wait();
 
 
-            foreach (
-                var story in
-                    resp.Result.Select(id => _ns.GetStory(id))
-                        .Where(story => !_all.Select(x => x.id).Contains(story.Result.id)))
+            foreach (var story in resp.Result.Select(id => _ns.GetStory(id)).Skip(_all.Count).Where(story => !_all.Select(x => x.id).Contains(story.Result.id)))
             {
                 _all.Add(story.Result);
                 if (_all.Count == breakPoint) break;

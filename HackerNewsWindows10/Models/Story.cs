@@ -21,9 +21,8 @@ namespace HackerNewsWindows10.Models
 
         public string SetReadableTime()
         {
-            var date = DateTime.Now.AddTicks(time*10000);
-            var date2 = DateTime.Now;
-            var seconds = date2.TimeOfDay.TotalSeconds - date.TimeOfDay.TotalSeconds;
+            var date = Util.UnixTimeStampToDateTime(time);
+            var seconds = Math.Floor(DateTime.Now.TimeOfDay.TotalSeconds - date.TimeOfDay.TotalSeconds);
 
             var interval = Math.Floor(seconds/31536000);
             if (interval > 1) return string.Format("{0} years ago", interval);
@@ -38,7 +37,7 @@ namespace HackerNewsWindows10.Models
             if (interval > 1) return string.Format("{0} hours ago", interval);
 
             interval = Math.Floor(seconds/60);
-            return interval > 1 ? string.Format("{0} hours ago", interval) : null;
+            return interval > 1 ? string.Format("{0} minutes ago", interval) : "Less than 1 minute ago";
         }
     }
 }
